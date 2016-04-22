@@ -1,0 +1,510 @@
+<html>
+	<head>
+		<title>Video Editor</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<title>videoEditor</title>
+		<!--external css-->
+		<link rel="stylesheet" type="text/css"  href="css/styles.css" />
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	</head>
+	<body>
+		<!--navigation bar-->
+		<nav class="navbar navbar-default"style="margin-bottom: 0px; position: relative; height: 8%">
+			<div class="navbar-header">
+				<!--left dropdown menu-->
+				 <ul class="nav navbar-nav navbar-left">
+				    <li class="dropdown" >
+				      <a id="eventLog" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Event Log <span class="caret"></span></a>
+				      <ul id="timeIndex" class="dropdown-menu">
+				        <li><a href="#">0:04</a></li>
+				        <li><a href="#">0:15</a></li>
+				        <li><a href="#">1:30</a></li>
+				      </ul>
+				    </li><!--dropdown-->
+				 </ul><!--nav-->
+			</div>
+
+			<div class="navbar-collapse collapse" id="navbar">
+				<ul class="nav navbar-nav navbar-right">
+					<li id="user"><a href="#"><span class="check-answer glyphicon glyphicon-user"></span> Dmitriy Babichenko</a></li>
+				</ul>
+			</div>
+			<h2 id="title"><a href="#">ScopingSim</a></h2>
+			
+		    <!--title-->
+		    <!--right user logo-->
+		 <!--   <a class="navbar-brand" href="#">UserName</a>-->
+		</nav>
+
+		<!--whole container-->
+		<div class="container-fluid">
+
+			<!--video Main area-->
+			<div class="row">
+			<div class="videoMain col-md-8">
+				<!--videoPreview-->
+				<div class="videoPreview">
+					<video id="videoPreview">
+						<source src="images/stock.mp4" alt="videoPreview" type="video/mp4">
+					</video>
+				</div><!--videoPreview-->
+
+
+				<!--videoInfo-->
+				<div class="videoInfo">
+					<!--warning-->
+					<div class="alert alert-info" role="alert">Please click in the video area to save the time and cordination for each event.</div>
+					<!--warning message change-->
+					<!--<div class="alert alert-info" role="alert">You have already save time and cordination successfully.</div>-->
+
+	    			
+	    			<!--x, y, time-->	
+		    		<div classs="info">
+		    			<!--x,y,time-->
+		    			<div class="row" style="margin-bottom:10px">
+		    				<div class="col-md-8">
+		    					<div class="row">
+			    					<!--X-->
+					    			<div class="col-md-3" >
+						    			<p class="info-x" style="line-height: 46px; margin: 0"><span>Rotation(X): </span><span class="detail-value"></span></p>
+						    		</div>
+
+						    		<!--Y-->
+						    		<div class="col-md-3">
+						    			<p class="info-y" style="line-height: 46px; margin: 0"><span>Movement(Y): </span><span class="detail-value"></span></p>
+						    		</div>
+
+						    		<!--Time-->
+						    		<div class="col-md-2">
+						    			<p class="info-time" style="line-height: 46px; margin: 0"><span>Time: </span><span class="detail-value"></span></p>
+						    		</div>
+						    	</div><!--nested row-->
+					    	</div><!--col-md-8-->
+					    	<!--submit-->
+					    	<div class="col-md-3">
+				    			<input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Finish Editing" ></input>
+				    		</div>
+				    	</div><!--outer row-->
+
+			    	</div><!--info-->
+				</div><!--videoInfo-->
+
+			</div><!--videoMain-->
+
+			<!--sideBar-->
+			<div class="col-md-4" style="padding-left: 0">
+				<div class="sidebar">
+
+					<div class="overlay">
+						<h4>Click on Video to Enable</h4>
+					</div>
+					<!--sideBarInfo-->
+					<div class="sidebar-info clearfix">
+						<div class="col-md-4">
+							<p class="info-x"><span>X: </span><span class="detail-value"></span></p>
+						</div>
+						<div class="col-md-4">
+							<p class="info-y"><span>Y: </span><span class="detail-value"></span></p>
+						</div>
+						<div class="col-md-4">
+							<p class="info-time"><span>Time: </span><span class="detail-value"></span></p>
+						</div>
+					</div><!--sidebar-info-->
+				
+					<!--sidebar content-->
+					<div class="sidebar-content">
+						<ul id="event-option" class="nav nav-sidebar">
+							<li class="option2 sidebar-option" data-toggle="modal" data-target="#noteModal"><a href="#">Edit Note</a></li>
+							<li class="option2 sidebar-option dropdown" role="presentation">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Edit Quiz<span class="caret"></span></a>
+								<!--nested list-->
+								<ul id="quiz-option" class="dropdown-menu">
+									<li class="sidebar-option" data-toggle="modal" data-target="#textQuizModal"><a href="#">Text</a></li>
+									<li class="sidebar-option" data-toggle="modal" data-target="#checkBoxQuizModal"><a href="#">Check Box</a></li>
+									<li class="sidebar-option" data-toggle="modal" data-target="#multipleChoiceQuizModal"><a href="#">Multiple Choice</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div><!-- sidebar-content -->
+					<button id="submitEvent" class="btn btn-default btn-lg btn-block">Save Event</button>
+
+				</div><!--sidebar-->
+				
+			</div><!-- col-md-4 -->
+
+		</div><!--container-->
+
+
+
+		<!-- Note Modal-->
+		<div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Notes</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="content-area">
+					<div class="form-group original-version">
+						<label>Note Content</label>
+						<input type="text" class="form-control" placeholder="note...">
+					</div>
+				</div>
+				<button class="btn btn-default add-btn">Add a New Note</button>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default reset">Reset</button>
+		        <button type="button" class="btn btn-primary save-modal">Save</button>
+		      </div>
+		    </div>
+		  </div>
+
+			<div class="form-group hidden input-template">
+				<label>Note Content</label>
+				<input type="text" class="form-control" placeholder="note...">
+			</div>
+		</div>
+
+
+
+		<!-- Text Quiz Modal -->
+		<div class="modal fade" id="textQuizModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Text Quiz</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="content-area">
+		      		<div class="text-questions original-version">
+						<div class="form-group">
+							<label>Question</label>
+							<input type="text" class="form-control" placeholder="Your question">
+						</div>
+						<div class="form-group">
+							<label>Answer</label>
+							<textarea class="form-control" rows="3"></textarea>
+						</div>
+					</div>
+				</div>
+				<button class="btn btn-default add-btn">Add a New Question</button>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default reset">Reset</button>
+		        <button type="button" class="btn btn-primary save-modal">Save</button>
+		      </div>
+		    </div>
+		  </div>
+
+		<!-- quiz content -->
+  		<div class="text-questions input-template hidden">
+				<div class="form-group">
+					<label>Question</label>
+					<input type="text" class="form-control" placeholder="Your question">
+				</div>
+				<div class="form-group">
+					<label>Answer</label>
+					<textarea class="form-control" rows="3"></textarea>
+				</div>
+			</div><!--quiz content -->
+		</div> <!-- text quiz modal -->
+
+
+		<!-- CheckBoxModal -->
+		<div class="modal fade" id="checkBoxQuizModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Check Box Quiz</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="content-area">
+		      		<div class="check-box-questions original-version">
+								<div class="form-group">
+									<label>Question</label>
+									<input type="text" class="form-control" placeholder="Your question">
+								</div>
+								
+								<!--choices-->
+								<div class="choices">
+									
+									<!--option1-->
+									<div class="form-group">
+										<div class="choice">
+											<span class="check-answer glyphicon glyphicon-ok"></span>
+											<span class="choice-text">Option 1</span>
+											<span class="actions pull-right">
+												<a class="edit">edit</a>
+												<a class="save hidden">save</a>
+											</span>
+										</div>
+									</div><!-- option -->
+
+									<!--option2-->
+									<div class="form-group">
+										<div class="choice">
+											<span class="check-answer glyphicon glyphicon-ok"></span>
+											<span class="choice-text">Option 2</span>
+											<span class="actions pull-right">
+												<a class="edit">edit</a>
+												<a class="save hidden">save</a>
+											</span>
+										</div>
+									</div><!-- option -->
+									
+									<!--option3-->
+									<div class="form-group">
+										<div class="choice">
+											<span class="check-answer glyphicon glyphicon-ok"></span>
+											<span class="choice-text">Option 3</span>
+											<span class="actions pull-right">
+												<a class="edit">edit</a>
+												<a class="save hidden">save</a>
+											</span>
+										</div>
+									</div><!-- option -->
+									
+									<!--option4-->
+									<div class="form-group">
+										<div class="choice">
+											<span class="check-answer glyphicon glyphicon-ok"></span>
+											<span class="choice-text">Option 4</span>
+											<span class="actions pull-right">
+												<a class="edit">edit</a>
+												<a class="save hidden">save</a>
+											</span>
+										</div>
+									</div><!-- option -->
+
+								</div><!-- choices -->
+
+							</div>
+						</div>
+						<button class="btn btn-default add-btn">Add a New Question</button>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default reset">Reset</button>
+		        <button type="button" class="btn btn-primary save-modal">Save</button>
+		      </div>
+		    </div>
+		  </div>
+
+			<!--check box question template-->
+  		<div class="check-box-questions input-template hidden">
+				<div class="form-group">
+					<label>Question</label>
+					<input type="text" class="form-control" placeholder="Your question">
+				</div>
+
+				<div class="choices">
+
+					<div class="form-group">
+						<div class="choice">
+							<span class="check-answer glyphicon glyphicon-ok"></span>
+							<span class="choice-text">Option 1</span>
+							<span class="actions pull-right">
+								<a class="edit">edit</a>
+								<a class="save hidden">save</a>
+							</span>
+						</div>
+					</div><!-- option -->
+
+					<div class="form-group">
+						<div class="choice">
+							<span class="check-answer glyphicon glyphicon-ok"></span>
+							<span class="choice-text">Option 2</span>
+							<span class="actions pull-right">
+								<a class="edit">edit</a>
+								<a class="save hidden">save</a>
+							</span>
+						</div>
+					</div><!-- option -->
+
+					<div class="form-group">
+						<div class="choice">
+							<span class="check-answer glyphicon glyphicon-ok"></span>
+							<span class="choice-text">Option 3</span>
+							<span class="actions pull-right">
+								<a class="edit">edit</a>
+								<a class="save hidden">save</a>
+							</span>
+						</div>
+					</div><!-- option -->
+
+					<div class="form-group">
+						<div class="choice">
+							<span class="check-answer glyphicon glyphicon-ok"></span>
+							<span class="choice-text">Option 4</span>
+							<span class="actions pull-right">
+								<a class="edit">edit</a>
+								<a class="save hidden">save</a>
+							</span>
+						</div>
+					</div><!-- option -->
+
+				</div><!-- choices -->
+
+			</div>
+
+
+		</div><!-- check box question template -->
+
+
+
+
+
+		<!-- multiple choice quesiton Modal -->
+		<div class="modal fade" id="multipleChoiceQuizModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel">Multiple Choice Question</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="content-area">
+		      		<div class="check-box-questions original-version">
+								<div class="form-group">
+									<label>Question</label>
+									<input type="text" class="form-control" placeholder="Your question">
+								</div>
+								
+								<!--choices-->
+								<div class="choices">
+
+									<div class="form-group">
+										<div class="choice">
+											<span class="check-answer glyphicon glyphicon-ok"></span>
+											<span class="choice-text">Option 1</span>
+											<span class="actions pull-right">
+												<a class="edit">edit</a>
+												<a class="save hidden">save</a>
+											</span>
+										</div>
+									</div><!-- option1 -->
+
+									<div class="form-group">
+										<div class="choice">
+											<span class="check-answer glyphicon glyphicon-ok"></span>
+											<span class="choice-text">Option 2</span>
+											<span class="actions pull-right">
+												<a class="edit">edit</a>
+												<a class="save hidden">save</a>
+											</span>
+										</div>
+									</div><!-- option2 -->
+
+									<div class="form-group">
+										<div class="choice">
+											<span class="check-answer glyphicon glyphicon-ok"></span>
+											<span class="choice-text">Option 3</span>
+											<span class="actions pull-right">
+												<a class="edit">edit</a>
+												<a class="save hidden">save</a>
+											</span>
+										</div>
+									</div><!-- option3 -->
+
+									<div class="form-group">
+										<div class="choice">
+											<span class="check-answer glyphicon glyphicon-ok"></span>
+											<span class="choice-text">Option 4</span>
+											<span class="actions pull-right">
+												<a class="edit">edit</a>
+												<a class="save hidden">save</a>
+											</span>
+										</div>
+									</div><!-- option4 -->
+
+								</div><!-- choices -->
+
+							</div>
+						</div>
+						<button class="btn btn-default add-btn">Add a New Question</button>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default reset">Reset</button>
+		        <button type="button" class="btn btn-primary save-modal">Save</button>
+		      </div>
+		    </div>
+		  </div>
+
+			
+  		<div class="multiple-choices-questions input-template hidden">
+				<div class="form-group">
+					<label>Question</label>
+					<input type="text" class="form-control" placeholder="Your question">
+				</div>
+
+				<div class="choices">
+
+					<div class="form-group">
+						<div class="choice">
+							<span class="check-answer glyphicon glyphicon-ok"></span>
+							<span class="choice-text">Option 1</span>
+							<span class="actions pull-right">
+								<a class="edit">edit</a>
+								<a class="save hidden">save</a>
+							</span>
+						</div>
+					</div><!-- option -->
+
+					<div class="form-group">
+						<div class="choice">
+							<span class="check-answer glyphicon glyphicon-ok"></span>
+							<span class="choice-text">Option 2</span>
+							<span class="actions pull-right">
+								<a class="edit">edit</a>
+								<a class="save hidden">save</a>
+							</span>
+						</div>
+					</div><!-- option -->
+
+					<div class="form-group">
+						<div class="choice">
+							<span class="check-answer glyphicon glyphicon-ok"></span>
+							<span class="choice-text">Option 3</span>
+							<span class="actions pull-right">
+								<a class="edit">edit</a>
+								<a class="save hidden">save</a>
+							</span>
+						</div>
+					</div><!-- option -->
+
+					<div class="form-group">
+						<div class="choice">
+							<span class="check-answer glyphicon glyphicon-ok"></span>
+							<span class="choice-text">Option 4</span>
+							<span class="actions pull-right">
+								<a class="edit">edit</a>
+								<a class="save hidden">save</a>
+							</span>
+						</div>
+					</div><!-- option -->
+
+				</div><!-- choices -->
+
+			</div>
+
+		
+		</div><!-- multiple choice question -->
+
+
+
+
+	</body>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous">
+	</script>
+	<script src="js/script.js"></script>
+
+</html>
