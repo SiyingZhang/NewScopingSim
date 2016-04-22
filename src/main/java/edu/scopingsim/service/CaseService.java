@@ -3,8 +3,6 @@ package edu.scopingsim.service;
 import static spark.Spark.*;
 
 import java.util.HashMap;
-import java.util.Random;
-import java.util.UUID;
 
 import com.google.gson.Gson;
 

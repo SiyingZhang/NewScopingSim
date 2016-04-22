@@ -3,7 +3,7 @@ package edu.scopingsim.bean;
 import java.util.UUID;
 
 public class Event {
-	private UUID eventId;
+	private int eventId;
 	private int x;
 	private int y;
 	private String timeIndex;
@@ -11,14 +11,14 @@ public class Event {
 	/**
 	 * @return the eventId
 	 */
-	public UUID getEventId() {
+	public int getEventId() {
 		return eventId;
 	}
 	
 	/**
 	 * @param eventId the eventId to set
 	 */
-	public void setEventId(UUID eventId) {
+	public void setEventId(int eventId) {
 		this.eventId = eventId;
 	}
 	

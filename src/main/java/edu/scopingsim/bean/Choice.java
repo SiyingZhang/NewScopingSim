@@ -3,14 +3,14 @@ package edu.scopingsim.bean;
 import java.util.UUID;
 
 public class Choice {
-	private UUID choiceId;
+	private int choiceId;
 	private String choiceText;
 	private boolean isTrue;
 	
-	public UUID getChoiceId() {
+	public int getChoiceId() {
 		return choiceId;
 	}
-	public void setChoiceId(UUID choiceId) {
+	public void setChoiceId(int choiceId) {
 		this.choiceId = choiceId;
 	}
 	public boolean getIsTrue() {
