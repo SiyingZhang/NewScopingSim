@@ -42,6 +42,7 @@ public class CaseService {
 					Case c = new Case();
 
 					c.setCaseName(caseName);
+					c.setCaseDescription(caseDescription);
 					cd.insertCase(c);
 					attributes.put("notExist", true);
 					attributes.put("status", "Registration succeeded, Redirecting page ...");

@@ -1,6 +1,7 @@
 /**
  * Get case name and go to video update interface
  */
+
 $(document).ready(function() {
 	$('#btn-create').click(function() {
 		var caseName = $('#caseName').val();

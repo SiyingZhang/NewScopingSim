@@ -1,14 +1,13 @@
 package edu.scopingsim.bean;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class Case {
 	
 	private int caseId;
 	private String caseName;
 	private String caseDescription;
-	private UUID createdBy;
+	private int createdBy;
 	private ArrayList<Video> videoList;
 	
 	public Case() {
@@ -23,11 +22,11 @@ public class Case {
 		return this.caseId;
 	}
 	
-	public void setCreatedBy (UUID createdBy) {
+	public void setCreatedBy (int createdBy) {
 		this.createdBy = createdBy;
 	}
 	
-	public UUID getCreatedBy() {
+	public int getCreatedBy() {
 		return this.createdBy;
 	}
 	

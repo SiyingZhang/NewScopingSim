@@ -121,16 +121,13 @@ public class CaseDao {
 	public boolean notExist(String caseName) {
 		
 		boolean notExist = true;
-		Connection connection = null;
-		Statement statement = null;
-		
 		//Select all case with caseName
-		String query = "SELECT COUNT(*) AS CaseCount FROM case WHERE caseName = '" + caseName +"'";
+		query = "SELECT COUNT(*) AS CaseCount FROM case WHERE caseName = '" + caseName +"'";
 		
 		try {
 			connection = DatabaseConnector.getConnection();
 			statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(query);
+			rs = statement.executeQuery(query);
 			
 			int count = rs.getInt("CaseCount");
 			notExist = (count == 0) ? true:false;
