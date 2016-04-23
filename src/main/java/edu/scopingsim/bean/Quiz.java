@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public class Quiz {
 	
-	private UUID quizId;
-	private UUID belongTo;
+	private int quizId;
+	private int belongTo;
 	private String quizType;
 	private String quizText;
 	private String timeIndex;  	//TODO: find the exact type of this variable
@@ -16,19 +16,19 @@ public class Quiz {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public UUID getQuizId() {
+	public int getQuizId() {
 		return this.quizId;
 	}
 	
-	public void setQuizId(UUID id) {
+	public void setQuizId(int id) {
 		this.quizId = id;
 	}
 	
-	public UUID getBelongTo() {
+	public int getBelongTo() {
 		return this.belongTo;
 	}
 	
-	public void setBelongTo(UUID id) {
+	public void setBelongTo(int id) {
 		this.belongTo = id;
 	}
 	

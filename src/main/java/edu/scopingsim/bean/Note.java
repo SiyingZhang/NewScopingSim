@@ -4,20 +4,20 @@ import java.util.UUID;
 
 public class Note {
 	
-	private UUID noteId;
+	private int noteId;
 	private String noteText;
 	private String timeIndex;
 	
 	/**
 	 * @return the noteId
 	 */
-	public UUID getNoteId() {
+	public int getNoteId() {
 		return noteId;
 	}
 	/**
 	 * @param noteId the noteId to set
 	 */
-	public void setNoteId(UUID noteId) {
+	public void setNoteId(int noteId) {
 		this.noteId = noteId;
 	}
 	

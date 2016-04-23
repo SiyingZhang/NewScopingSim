@@ -5,7 +5,9 @@ import java.util.UUID;
 
 public class Video {
 	
-	private UUID videoId;
+	private int videoId;
+	private int caseId;
+	private String videoName;
 	private String path;
 	private ArrayList<Note> noteList;
 	private ArrayList<Quiz> quizList;
@@ -19,13 +21,25 @@ public class Video {
 	/**
 	 * @return the videoId
 	 */
-	public UUID getVideoId() {
+	public int getVideoId() {
 		return videoId;
 	}
 	/**
 	 * @param videoId the videoId to set
 	 */
-	public void setVideoId(UUID videoId) {
+	public void setCaseId(int caseId) {
+		this.caseId = caseId;
+	}
+	/**
+	 * @return the videoId
+	 */
+	public int getcaseId() {
+		return caseId;
+	}
+	/**
+	 * @param videoId the videoId to set
+	 */
+	public void setVideoId(int videoId) {
 		this.videoId = videoId;
 	}
 	/**
@@ -40,6 +54,22 @@ public class Video {
 	public void setPath(String path) {
 		this.path = path;
 	}
+	/**
+	 * @return the videoName
+	 */
+	public String getVideoName() {
+		return videoName;
+	}
+
+	/**
+	 * @param videoName the videoName to set
+	 */
+	public void setVideoName(String videoName) {
+		this.videoName = videoName;
+	}
+	
+	
+	
 	
 	/**
 	 * @return the noteList

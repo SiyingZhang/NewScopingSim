@@ -28,18 +28,20 @@ public class VideoDao {
 		}
 		
 		/**
-		 * Insert case record into TABLE case
-		 * @param Case c
-		 * @return case id
+		 * Insert video record into TABLE video
+		 * @param Video v
+		 * @return video id
 		 */
 		public int insertVideo(Video v, int caseID) {
 			
-			query = "INSERT INTO scopingsim.case(caseName, caseDescription) values (?, ?)"; 
+			query = "INSERT INTO scopingsim.video(videoName, path, caseID) values (?, ?, ?)"; 
 			//" + c.getCaseId() + "','" + c.getCaseName() + "','" + c.getCaseDescription() + "' )";
 			try {
-				query = "INSERT INTO scopingsim.video(path) values (?)"; 
+				query = "INSERT INTO scopingsim.video(videoName, path, caseID) values (?,?)"; 
 				PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 				ps.setString(1, v.getPath());
+				ps.setString(2, v.getVideoName());
+				ps.setInt(3, v.getcaseId());
 				ps.executeUpdate();
 
 				ResultSet rs = ps.getGeneratedKeys();
@@ -63,5 +65,34 @@ public class VideoDao {
 		 * @param caseName String
 		 * @return selected Case
 		 */
+		public boolean notExist(String videoName) {
+			
+			boolean notExist = true;
+			//Select all case with caseName
+			query = "SELECT COUNT(*) AS VideoCount FROM video WHERE videoName = '" + videoName +"'";
+			
+			try {
+				connection = DatabaseConnector.getConnection();
+				statement = connection.createStatement();
+				rs = statement.executeQuery(query);
+				
+				int count = rs.getInt("VideoCount");
+				notExist = (count == 0) ? true:false;
+				
+			} catch (SQLException e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			} finally {
+				if(connection != null) {
+					try {
+						connection.close();
+					} catch (SQLException e2) {
+						// TODO: handle exception
+						System.out.println(this.getClass() + ".notExist: can't close the connection.");
+					}
+				}
+			}
+			return notExist;
+		}
 
 }

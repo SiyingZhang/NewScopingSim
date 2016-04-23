@@ -22,6 +22,5 @@ public class HostService {
 		
 		CaseService cs = new CaseService();
 		
-		
 	}
 }

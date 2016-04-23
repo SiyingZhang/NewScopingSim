@@ -2,19 +2,24 @@ package edu.scopingsim.service;
 
 import static spark.Spark.*;
 
+
 import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
+
 import com.google.gson.Gson;
+
 
 import edu.scopingsim.bean.Case;
 import edu.scopingsim.bean.Video;
 import edu.scopingsim.dao.CaseDao;
+import edu.scopingsim.dao.VideoDao;
+
 
 public class VideoService {
 	private Gson gson = new Gson();
-	private CaseDao cd = new CaseDao();
+	private VideoDao vd = new VideoDao();
 	
 	/**
 	 * Case service 
@@ -39,7 +44,7 @@ public class VideoService {
 					Video v = new Video();
 
 					v.setPath(path);
-					cd.insertVideo(v, );
+					vd.insertVideo(v, );
 					attributes.put("notExist", true);
 					attributes.put("status", "Registration succeeded, Redirecting page ...");
 				
