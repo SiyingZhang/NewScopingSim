@@ -3,29 +3,26 @@
  */
 
 $(document).ready(function() {
-	$('#btn-create').click(function() {
+	$('#btn-create').click(function(e) {
+		e.preventDefault();
+		
 		var caseName = $('#caseName').val();
 		var caseDescription = $('#caseDescription').val()；
 		if(inputValue(caseName, caseDescription)) {
 			var data = [{
-				"caseName": caseName, 
-				"caseDescription": caseDescription
+				caseName: caseName, 
+				caseDescription: caseDescription
 				}];
 			$.ajax({
 				type: 'POST',
 				url: "/case",
-				data: JSON.stingify(data),
+				data: data,
 				dataType: "json",
-				success: function (case, textStatus, jqXHR) {
-					if(case.hasOwnProperty('notExist')) {
-						//if case doesn't exist.
-						if(case.notExist) {
-							$.get("/uploadVideo", data);
-							window.location='/upload.html';
-						} else {
-							$("#caseName").val("");
-							$('#caseDescription').val("");
-						}
+				success: function (case) {
+					console.log(case);
+					if (case.notExist) {
+						$.get("/uploadVideo", data); //transfer case data into video.
+						window.location = "/upload.html";				
 					} else {
 						$("#caseName").val("");
 						$('#caseDescription').val("");
@@ -34,10 +31,8 @@ $(document).ready(function() {
 				error: function(jqXHR, textStatus, errorThrown) {		
 					console.log(errorThrown);
 				},
-			}); 
+			}); 	
 		};		
-	});
-
 });
 
 function inputValue(caseName, caseDescription) {
