@@ -38,13 +38,15 @@ public class VideoService {
 			//String caseName = request.queryParams("caseName");
 			//String caseDescription = request.queryParams("caseDescription");
 			String path = "Kelly Clark";
+			String videoName = null;
+			int caseId = 0;
 			attributes.put("path", path);
 			
 			try {
 					Video v = new Video();
 
 					v.setPath(path);
-					vd.insertVideo(v, );
+					vd.insertVideo(caseId, videoName, path);
 					attributes.put("notExist", true);
 					attributes.put("status", "Registration succeeded, Redirecting page ...");
 				

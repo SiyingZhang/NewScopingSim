@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public class Choice {
 	private int choiceId;
+	private int quizId;
 	private String choiceText;
 	private boolean isTrue;
 	
@@ -28,6 +29,12 @@ public class Choice {
 	}
 	public void setChoiceText(String choiceText) {
 		this.choiceText = choiceText;
+	}
+	public int getQuizId() {
+		return quizId;
+	}
+	public void setQuizId(int quizId) {
+		this.quizId = quizId;
 	}
 	
 	

@@ -32,16 +32,16 @@ public class VideoDao {
 		 * @param Video v
 		 * @return video id
 		 */
-		public int insertVideo(Video v, int caseID) {
+		public int insertVideo(int caseId, String videoName, String path) {
 			
 			query = "INSERT INTO scopingsim.video(videoName, path, caseID) values (?, ?, ?)"; 
 			//" + c.getCaseId() + "','" + c.getCaseName() + "','" + c.getCaseDescription() + "' )";
 			try {
-				query = "INSERT INTO scopingsim.video(videoName, path, caseID) values (?,?)"; 
+				query = "INSERT INTO scopingsim.video(videoName, path, caseID) values (?,?,?)"; 
 				PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-				ps.setString(1, v.getPath());
-				ps.setString(2, v.getVideoName());
-				ps.setInt(3, v.getcaseId());
+				ps.setInt(1, caseId);
+				ps.setString(2, videoName);
+				ps.setString(3, path);
 				ps.executeUpdate();
 
 				ResultSet rs = ps.getGeneratedKeys();

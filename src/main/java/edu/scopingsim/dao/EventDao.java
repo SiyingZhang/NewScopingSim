@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 import edu.scopingsim.bean.Case;
+import edu.scopingsim.bean.Event;
 import edu.scopingsim.bean.Video;
 import edu.scopingsim.utils.DatabaseConnector;
 
@@ -30,15 +31,17 @@ public class EventDao {
 	 * @param Event e
 	 * @return event id
 	 */
-	public int insertVideo(Video v, int caseID) {
+	public int insertEvent(int videoId, String timeIndex, int x, int y) {
 		
-		query = "INSERT INTO scopingsim.event(videoName, path) values (?, ?)"; 
-		//" + c.getCaseId() + "','" + c.getCaseName() + "','" + c.getCaseDescription() + "' )";
+		query = "INSERT INTO scopingsim.event(videoId, timeIndex, x, y) values (?, ?, ?, ?)"; 
+		//" + e.getVideoId() + "','" + e.getTimeIndex() + "','" + e.getX() + "' )";
 		try {
-			query = "INSERT INTO scopingsim.video(videoName, path) values (?,?)"; 
+			query = "INSERT INTO scopingsim.event(videoId, timeIndex, x, y) values (?, ?, ?, ?)"; 
 			PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			ps.setString(1, v.getPath());
-			ps.setString(2, v.getVideoName());
+			ps.setInt(1, videoId);
+			ps.setString(2, timeIndex);
+			ps.setInt(3, x);
+			ps.setInt(4, y);
 			ps.executeUpdate();
 
 			ResultSet rs = ps.getGeneratedKeys();
@@ -50,46 +53,12 @@ public class EventDao {
 				return -1;
 			}
 			
-		} catch (SQLException e) {
+		} catch (SQLException e3) {
 			// TODO: handle exception
-			e.printStackTrace();
+			e3.printStackTrace();
 			return -1;
 		}
 	}
 	
-	/**
-	 * Select case by case Name
-	 * @param caseName String
-	 * @return selected Case
-	 */
-	public boolean notExist(String videoName) {
-		
-		boolean notExist = true;
-		//Select all case with caseName
-		query = "SELECT COUNT(*) AS VideoCount FROM video WHERE videoName = '" + videoName +"'";
-		
-		try {
-			connection = DatabaseConnector.getConnection();
-			statement = connection.createStatement();
-			rs = statement.executeQuery(query);
-			
-			int count = rs.getInt("VideoCount");
-			notExist = (count == 0) ? true:false;
-			
-		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		} finally {
-			if(connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e2) {
-					// TODO: handle exception
-					System.out.println(this.getClass() + ".notExist: can't close the connection.");
-				}
-			}
-		}
-		return notExist;
-	}
 
 }

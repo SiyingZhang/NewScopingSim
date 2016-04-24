@@ -6,10 +6,9 @@ import java.util.UUID;
 public class Quiz {
 	
 	private int quizId;
-	private int belongTo;
-	private String quizType;
+	private int event;
+	private int quizType;
 	private String quizText;
-	private String timeIndex;  	//TODO: find the exact type of this variable
 	private ArrayList<Choice> choices;
 	
 	public Quiz() {
@@ -24,22 +23,6 @@ public class Quiz {
 		this.quizId = id;
 	}
 	
-	public int getBelongTo() {
-		return this.belongTo;
-	}
-	
-	public void setBelongTo(int id) {
-		this.belongTo = id;
-	}
-	
-	public String getQuizType() {
-		return this.quizType;
-	}
-	
-	public void setQuizType(String t) {
-		this.quizType = t;
-	}
-	
 	public String getQuizText() {
 		return quizText;
 	}
@@ -52,18 +35,22 @@ public class Quiz {
 		choices.add(c);
 	}
 
-	/**
-	 * @return the timeIndex
-	 */
-	public String getTimeIndex() {
-		return timeIndex;
+	public int getEvent() {
+		return event;
 	}
 
-	/**
-	 * @param timeIndex the timeIndex to set
-	 */
-	public void setTimeIndex(String timeIndex) {
-		this.timeIndex = timeIndex;
+	public void setEvent(int event) {
+		this.event = event;
 	}
+
+	public int getQuizType() {
+		return quizType;
+	}
+
+	public void setQuizType(int quizType) {
+		this.quizType = quizType;
+	}
+
+	
 	
 }

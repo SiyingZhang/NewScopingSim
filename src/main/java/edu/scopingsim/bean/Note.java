@@ -6,7 +6,7 @@ public class Note {
 	
 	private int noteId;
 	private String noteText;
-	private String timeIndex;
+	private int eventId;
 	
 	/**
 	 * @return the noteId
@@ -33,18 +33,12 @@ public class Note {
 	public void setNoteText(String noteText) {
 		this.noteText = noteText;
 	}
+	public int getEventId() {
+		return eventId;
+	}
+	public void setEventId(int eventId) {
+		this.eventId = eventId;
+	}
 	
-	/**
-	 * @return the timeIndex
-	 */
-	public String getTimeIndex() {
-		return timeIndex;
-	}
-	/**
-	 * @param timeIndex the timeIndex to set
-	 */
-	public void setTimeIndex(String timeIndex) {
-		this.timeIndex = timeIndex;
-	}
 
 }
