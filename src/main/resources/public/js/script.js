@@ -110,8 +110,7 @@ $( document ).ready(function(){
 		}
 		$modal.modal('hide');
 		console.log('fake save');
-		// need to validate
-
+		
 	})
 
 	$('#submitEvent').click(function(){
@@ -145,6 +144,19 @@ $( document ).ready(function(){
 
 		console.log(obj);
 		window.obj = obj;
+
+		$.ajax({
+			type: "POST",
+			//the url where you want to sent the userName and password to
+			url: '/event',
+			dataType: 'json',
+			//json object to sent to the authentication url
+			data: JSON.stringify(obj),
+			success: function () {
+				alert("Thanks!"); 
+			}
+		})
+
 	})
 
 });
@@ -253,8 +265,12 @@ function getNotes($modal) {
 	var $inputs = $modal.find('.content-area input');
 	var res = [];
 	$.each($inputs, function(i){
-		if ($(this).val()) 
-			res.push($(this).val());
+		if ($(this).val()) {
+			var obj = {};
+			obj.text = $(this).val();
+			res.push(obj);			
+		}
+
 	})
 
 	return res;
