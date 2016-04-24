@@ -2,14 +2,9 @@ package edu.scopingsim.service;
 
 import static spark.Spark.*;
 
-
 import java.util.HashMap;
-
-
 import spark.Session;
-
 import com.google.gson.Gson;
-
 
 import edu.scopingsim.bean.Case;
 
@@ -48,8 +43,8 @@ public class CaseService {
 					System.out.println("id:" + id);
 					
 					//Add new case to session
-					//Session session = request.session(true);
-					//session.attribute("case");
+					Session session = request.session(true);
+					session.attribute("case", c);
 					
 					attributes.put("notExist", true);
 					attributes.put("status", "Registration succeeded, Redirecting page ...");

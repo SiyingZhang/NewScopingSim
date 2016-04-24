@@ -22,6 +22,7 @@ public class HostService {
 		}, new FreeMarkerEngine());
 		
 		CaseService cs = new CaseService();
+		EventService es = new EventService();
 		
 	}
 }
