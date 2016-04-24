@@ -1,6 +1,6 @@
 package edu.scopingsim.bean;
 
-import java.util.UUID;
+import edu.scopingsim.dao.EventDao;
 
 public class Event {
 	private int eventId;
@@ -72,5 +72,19 @@ public class Event {
 	public void setVideoId(int videoId) {
 		this.videoId = videoId;
 	}
+	
+	//Add event to Database
+	public int addEvent(int videoid, String timeindex, int x, int y) {
+		this.videoId = videoid;
+		this.timeIndex = timeindex;
+		this.x = x;
+		this.y = y;
+		
+		EventDao ed = new EventDao();
+		this.eventId = ed.insertEvent(videoid, timeIndex, x, y);
+		
+		return eventId;
+	}
+	
 	
 }

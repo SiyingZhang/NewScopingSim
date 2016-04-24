@@ -1,12 +1,13 @@
 package edu.scopingsim.bean;
 
 import java.util.ArrayList;
-import java.util.UUID;
+
+import edu.scopingsim.dao.QuizDao;
 
 public class Quiz {
 	
 	private int quizId;
-	private int event;
+	private int eventId;
 	private int quizType;
 	private String quizText;
 	private ArrayList<Choice> choices;
@@ -35,12 +36,12 @@ public class Quiz {
 		choices.add(c);
 	}
 
-	public int getEvent() {
-		return event;
+	public int getEventId() {
+		return eventId;
 	}
 
-	public void setEvent(int event) {
-		this.event = event;
+	public void setEventId(int eventid) {
+		this.eventId = eventid;
 	}
 
 	public int getQuizType() {
@@ -50,7 +51,21 @@ public class Quiz {
 	public void setQuizType(int quizType) {
 		this.quizType = quizType;
 	}
-
 	
-	
+	/**
+	 * Insert quiz into database
+	 * @param eventid
+	 * @param type
+	 * @param text
+	 * @return
+	 */
+	public int addQuiz(int eventid, int type, String text) {
+		this.eventId = eventid;
+		this.quizType = type;
+		this.quizText = text;
+		
+		QuizDao qd = new QuizDao();
+		this.quizId = qd.insertQuiz(eventId, quizType, quizText);
+		return quizId;
+	}	
 }

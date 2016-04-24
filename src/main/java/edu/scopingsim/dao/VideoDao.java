@@ -18,13 +18,11 @@ import edu.scopingsim.utils.DatabaseConnector;
 public class VideoDao {
 
 		private Connection connection;
-		Statement statement = null;
-		ResultSet rs = null;
 		String query = "";
 
 		public VideoDao() {
 			connection = DatabaseConnector.getConnection();
-			System.out.println("--------- CaseDao Connection --------");
+			System.out.println("--------- VideoDao Connection --------");
 		}
 		
 		/**
@@ -61,20 +59,20 @@ public class VideoDao {
 		}
 		
 		/**
-		 * Select case by case Name
-		 * @param caseName String
-		 * @return selected Case
+		 * Judge whether this video has already existed
+		 * @param videoName
+		 * @return
 		 */
 		public boolean notExist(String videoName) {
 			
 			boolean notExist = true;
 			//Select all case with caseName
-			query = "SELECT COUNT(*) AS VideoCount FROM video WHERE videoName = '" + videoName +"'";
+			query = "SELECT COUNT(*) AS VideoCount FROM scopingsim.video WHERE videoName=" + videoName;
 			
 			try {
 				connection = DatabaseConnector.getConnection();
-				statement = connection.createStatement();
-				rs = statement.executeQuery(query);
+				Statement statement = connection.createStatement();
+				ResultSet rs = statement.executeQuery(query);
 				
 				int count = rs.getInt("VideoCount");
 				notExist = (count == 0) ? true:false;

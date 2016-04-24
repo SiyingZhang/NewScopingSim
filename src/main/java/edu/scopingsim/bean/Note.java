@@ -1,6 +1,6 @@
 package edu.scopingsim.bean;
 
-import java.util.UUID;
+import edu.scopingsim.dao.NoteDao;
 
 public class Note {
 	
@@ -40,5 +40,20 @@ public class Note {
 		this.eventId = eventId;
 	}
 	
-
+	/**
+	 * Add note to database
+	 * @param eventid
+	 * @param notetext
+	 * @return
+	 */
+	public int addNote(int eventid, String notetext) {
+		this.eventId = eventid;
+		this.noteText = notetext;
+		
+		NoteDao nd = new NoteDao();
+		this.noteId = nd.insertNote(eventId, noteText);
+		
+		return noteId;
+	}
+	
 }

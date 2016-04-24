@@ -18,7 +18,7 @@ public class QuizDao {
 
 	public QuizDao() {
 		connection = DatabaseConnector.getConnection();
-		System.out.println("--------- CaseDao Connection --------");
+		System.out.println("--------- QuizDao Connection --------");
 	}
 	
 	/**
@@ -26,10 +26,8 @@ public class QuizDao {
 	 * @param quiz q
 	 * @return quiz id
 	 */
-	public int insertNote(int event, int quizType, String quizText) {
+	public int insertQuiz(int event, int quizType, String quizText) {
 		
-		query = "INSERT INTO scopingsim.quiz(event, quizText, quizType) values (?, ?, ?)"; 
-		//" + e.getVideoId() + "','" + e.getTimeIndex() + "','" + e.getX() + "' )";
 		try {
 			query = "INSERT INTO scopingsim.quiz(event, quizText,quizType) values (?, ?, ?)"; 
 			PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);

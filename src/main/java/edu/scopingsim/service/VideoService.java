@@ -22,7 +22,7 @@ public class VideoService {
 	private VideoDao vd = new VideoDao();
 	
 	/**
-	 * Case service 
+	 * Video service 
 	 */
 	public VideoService() {
 		super();
@@ -32,27 +32,29 @@ public class VideoService {
 	private void StartService() {
 		//create case process
 		
-		post("/case", (request, response) -> {
+		post("/uploadVideo", (request, response) -> {
 			HashMap<String, Object> attributes = new HashMap<>();
-			//Get case name and case description
-			//String caseName = request.queryParams("caseName");
-			//String caseDescription = request.queryParams("caseDescription");
-			String path = "Kelly Clark";
-			String videoName = null;
-			int caseId = 0;
-			attributes.put("path", path);
+			//Get video name and video description
+			String videoName = request.queryParams("videoName");
+			String videoPath = "/user/siying/Video/stock.mp4";
+			int caseId = Integer.parseInt(request.queryParams("caseId"));
+			int videoId = 0;
+			
+			attributes.put("videoName", videoName);
+			attributes.put("path", videoPath);
 			
 			try {
 					Video v = new Video();
-
-					v.setPath(path);
-					vd.insertVideo(caseId, videoName, path);
-					attributes.put("notExist", true);
-					attributes.put("status", "Registration succeeded, Redirecting page ...");
-				
-					attributes.put("notExist", false);
-					attributes.put("status", "Case has been created before, or this name has been useed before.");
-				
+					int temp = v.addVideo(caseId, videoName, videoPath);
+					if(temp != -1) {
+						videoId = temp;
+						attributes.put("notExist", true);
+						attributes.put("status", "Video uploaded successfully, redirecting now...");
+					} else{
+						videoId = -1;
+						attributes.put("notExist", false);
+						attributes.put("status", "Video has been uploaded before");
+					}				
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();

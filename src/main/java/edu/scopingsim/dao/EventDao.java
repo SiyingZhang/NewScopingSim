@@ -23,7 +23,7 @@ public class EventDao {
 
 	public EventDao() {
 		connection = DatabaseConnector.getConnection();
-		System.out.println("--------- CaseDao Connection --------");
+		System.out.println("--------- EventDao Connection --------");
 	}
 	
 	/**
