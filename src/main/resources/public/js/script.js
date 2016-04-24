@@ -132,12 +132,14 @@ $( document ).ready(function(){
 		var $multipleChoiceQuizModal = $('#multipleChoiceQuizModal');
 		var multipleChoiceQuiz = getMultipleChoiceQuiz($multipleChoiceQuizModal);
 
+		var meta = getMeta();
 
 		var obj = {};
 		obj.notes = notes;
 		obj.textQuiz = textQuiz;
 		obj.checkBoxQuiz = checkBoxQuiz;
 		obj.multipleChoiceQuiz = multipleChoiceQuiz;
+		obj.meta = meta;
 
 
 		console.log(obj);
@@ -150,8 +152,8 @@ $( document ).ready(function(){
 			dataType: 'json',
 			//json object to sent to the authentication url
 			data: JSON.stringify(obj),
-			success: function () {
-				alert("Thanks!"); 
+			success: function (res) {
+				console.log(res); 
 			}
 		})
 
@@ -162,6 +164,22 @@ $( document ).ready(function(){
 
 
 //functions
+function getMeta() {
+	var $sidebar = $('.sidebar');
+	var x = $sidebar.find('.sidebar-info .info-x .detail-value');
+	var y = $sidebar.find('.sidebar-info .info-y .detail-value');
+	var time = $sidebar.find('.sidebar-info .info-time .detail-value');
+	var obj = {
+		x: x,
+		y: y,
+		time: time
+	}
+	return obj;
+}
+
+
+
+
 function inputValidation($contents) {
 
 	var hasChoice = $contents.find('.choices').length > 0;
