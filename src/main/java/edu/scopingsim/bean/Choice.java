@@ -1,6 +1,6 @@
 package edu.scopingsim.bean;
 
-import java.util.UUID;
+import edu.scopingsim.dao.ChoiceDao;
 
 public class Choice {
 	private int choiceId;
@@ -37,5 +37,15 @@ public class Choice {
 		this.quizId = quizId;
 	}
 	
+	public int addChoice(int quizid, String text, boolean is) {
+		this.quizId = quizid;
+		this.choiceText = text;
+		this.isTrue = is;
+		
+		ChoiceDao choiceDao = new ChoiceDao();
+		this.choiceId = choiceDao.insertChoice(quizId, choiceText, isTrue);
+		
+		return choiceId;
+	}
 	
 }

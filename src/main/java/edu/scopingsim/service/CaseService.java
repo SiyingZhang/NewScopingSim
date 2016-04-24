@@ -39,7 +39,7 @@ public class CaseService {
 
 			attributes.put("caseName", caseName);
 			attributes.put("caseDescription", caseDescription);
-			System.out.println(attributes.get("caseName") + ": " + attributes.get("caseDescription"));
+			//System.out.println(attributes.get("caseName") + ": " + attributes.get("caseDescription"));
 			
 			try {
 				int temp = c.addCase(caseName, caseDescription);  //Insert case			

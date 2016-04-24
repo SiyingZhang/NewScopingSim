@@ -67,19 +67,25 @@ public class Case {
 	}
 
 	/**
-	 * @param caseDescription the caseDescription to set
+	 * @param set the case description
 	 */
 	public void setCaseDescription(String caseDescription) {
 		this.caseDescription = caseDescription;
 	}
 	
+	/**
+	 * Add case into database
+	 * @param casename
+	 * @param casedescription
+	 * @return
+	 */
 	public int addCase(String casename, String casedescription) {
 		this.caseName = casename;
 		this.caseDescription = casedescription;
 		
 		CaseDao cd = new CaseDao();
 		if(cd.notExist(casename)) {
-			this.caseId = cd.insertCase(casename, casedescription);
+			this.caseId = cd.insertCase(caseName, caseDescription);
 			return caseId;
 		} else {
 			return -1;

@@ -1,7 +1,8 @@
 package edu.scopingsim.bean;
 
 import java.util.ArrayList;
-import java.util.UUID;
+
+import edu.scopingsim.dao.VideoDao;
 
 public class Video {
 	
@@ -11,6 +12,7 @@ public class Video {
 	private String path;
 	private ArrayList<Note> noteList;
 	private ArrayList<Quiz> quizList;
+	
 	
 	public Video() {
 		// TODO Auto-generated constructor stub
@@ -68,9 +70,6 @@ public class Video {
 		this.videoName = videoName;
 	}
 	
-	
-	
-	
 	/**
 	 * @return the noteList
 	 */
@@ -95,6 +94,26 @@ public class Video {
 	 */
 	public void addQuiz(Quiz quiz) {
 		this.quizList.add(quiz);
+	}
+	/**
+	 * Add video to Database
+	 * @param caseid
+	 * @param videoname
+	 * @param p
+	 * @return insert record ID
+	 */
+	public int addVideo(int caseid, String videoname, String p) {
+		VideoDao vd = new VideoDao();
+		this.caseId = caseid;
+		this.videoName = videoname;
+		this.path = p;
+		
+		if(vd.notExist(videoName)) {
+			this.videoId = vd.insertVideo(caseId, videoName, path);
+			return videoId;
+		} else {
+			return -1;
+		}
 	}
 	
 }
