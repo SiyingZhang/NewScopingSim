@@ -37,6 +37,7 @@ public class Choice {
 		this.quizId = quizId;
 	}
 	
+	//Add choice into database
 	public int addChoice(int quizid, String text, boolean is) {
 		this.quizId = quizid;
 		this.choiceText = text;

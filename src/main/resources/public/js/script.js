@@ -208,8 +208,6 @@ function inputValidation($contents) {
 	return errorMsg;
 }
 
-
-
 function addOperation(id) {
 	var $modal = $('#' + id);
 	var $template = $modal.find('.input-template').clone().removeClass('hidden input-template').addClass('extra-version');
@@ -359,8 +357,6 @@ function getChoices($choices) {
 	return res;
 
 }
-
-
 
 
 
