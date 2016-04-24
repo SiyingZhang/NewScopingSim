@@ -124,8 +124,6 @@ $( document ).ready(function(){
 		var $textQuizModal = $('#textQuizModal');
 		var textQuiz = getTextQuiz($textQuizModal);
 
-
-
 		// checkBox quiz
 		var $checkBoxQuizModal = $('#checkBoxQuizModal');
 		var checkBoxQuiz = getCheckBoxQuiz($checkBoxQuizModal);
