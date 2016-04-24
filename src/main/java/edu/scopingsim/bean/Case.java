@@ -2,6 +2,8 @@ package edu.scopingsim.bean;
 
 import java.util.ArrayList;
 
+import edu.scopingsim.dao.CaseDao;
+
 public class Case {
 	
 	private int caseId;
@@ -69,6 +71,20 @@ public class Case {
 	 */
 	public void setCaseDescription(String caseDescription) {
 		this.caseDescription = caseDescription;
+	}
+	
+	public int addCase(String casename, String casedescription) {
+		this.caseName = casename;
+		this.caseDescription = casedescription;
+		
+		CaseDao cd = new CaseDao();
+		if(cd.notExist(casename)) {
+			this.caseId = cd.insertCase(casename, casedescription);
+			return caseId;
+		} else {
+			return -1;
+		}
+		
 	}
  
 }

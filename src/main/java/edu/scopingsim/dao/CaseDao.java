@@ -17,8 +17,6 @@ import edu.scopingsim.utils.DatabaseConnector;
 
 public class CaseDao {
 	private Connection connection;
-	Statement statement = null;
-	ResultSet rs = null;
 	String query = "";
 
 	public CaseDao() {
@@ -31,15 +29,15 @@ public class CaseDao {
 	 * @param Case c
 	 * @return case id
 	 */
-	public int insertCase(Case c) {
+	public int insertCase(String casename, String casedescription) {
 		
-		query = "INSERT INTO scopingsim.case(caseName, caseDescription) values (?, ?)"; 
-		//" + c.getCaseId() + "','" + c.getCaseName() + "','" + c.getCaseDescription() + "' )";
 		try {
 			query = "INSERT INTO scopingsim.case(caseName, caseDescription) values (?, ?)"; 
 			PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			ps.setString(1, c.getCaseName());
-			ps.setString(2, c.getCaseDescription());
+			
+			ps.setString(1, casename);
+			ps.setString(2, casedescription);
+			
 			ps.executeUpdate();
 
 			ResultSet rs = ps.getGeneratedKeys();
@@ -66,11 +64,11 @@ public class CaseDao {
 	
 	public Case selectCase(String caseName) {
 		Case c = new Case();
-		query = "SELECT * FROM scopingsim.case WHERE caseName = '" + caseName + "'";
+		query = "SELECT * FROM scopingsim.case WHERE caseName=" + caseName;
 		
 		try {
-			statement = connection.createStatement();
-			rs = statement.executeQuery(query);
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(query);
 			
 			c.setCaseId(rs.getInt(1));
 			c.setCaseName(rs.getString(2));
@@ -94,8 +92,8 @@ public class CaseDao {
 		query = "SELECT * FROM scopingsim.case WHERE caseId=" + caseId; 
 		
 		try{
-			statement = connection.createStatement();
-			rs = statement.executeQuery(query);
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(query);
 
 			String caseName = rs.getString(2);
 			String caseDescription = rs.getString(3);
@@ -121,29 +119,22 @@ public class CaseDao {
 	public boolean notExist(String caseName) {
 		
 		boolean notExist = true;
+		int count = 0;
 		//Select all case with caseName
-		query = "SELECT COUNT(*) AS CaseCount FROM case WHERE caseName = '" + caseName +"'";
+		query = "SELECT COUNT(*) AS CaseCount FROM scopingsim.case WHERE caseName =" + caseName;
 		
 		try {
-			connection = DatabaseConnector.getConnection();
-			statement = connection.createStatement();
-			rs = statement.executeQuery(query);
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(query);
 			
-			int count = rs.getInt("CaseCount");
+			while(rs.next()) {
+				count = rs.getInt("CaseCount");
+			}
 			notExist = (count == 0) ? true:false;
 			
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
-		} finally {
-			if(connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e2) {
-					// TODO: handle exception
-					System.out.println(this.getClass() + ".notExist: can't close the connection.");
-				}
-			}
 		}
 		return notExist;
 	}

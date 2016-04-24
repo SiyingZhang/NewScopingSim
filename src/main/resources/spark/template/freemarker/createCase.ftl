@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- create a case page -->
 <html>
-	<title>${title}</title>
+	<title>ScopingSim-Create Case</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/case-script.js"></script>
 	<style>
 		.heading {
 			color: #515151;
@@ -66,6 +67,7 @@
 	    <!--right user logo-->
 	 <!--   <a class="navbar-brand" href="#">UserName</a>-->
 	</nav>
+	
 	<h2 class="heading">Welcome to ScopingSim</h2>
 	<h4 class="subheading">Please create a case to start your editting.</h4>
 	<!-- Trigger the modal with a button -->
@@ -85,12 +87,17 @@
 	      	</div>
 			<div class="modal-body">
 				<div class="input-group">
-					<input name="caseName" type="text" class="form-control" placeholder="Case Name" aria-describedby="sizing-addon2">
+					<label>Case Name: </label>
+					<input id="caseName" type="text" class="form-control" placeholder="Case Name" aria-describedby="sizing-addon2">
+				</div>
+				<div class="input-group">
+					<label>Description: </label>
+					<input id="caseDescription" type="text" class="form-control" placeholder="Case Description" aria-describedby="sizing-addon2">
 				</div>
 			</div>
 	      	<div class="modal-footer">
-	      		<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	        	<button type="button" class="btn btn-primary">Create</button>        	
+	      		<button type="button" id="btn-cancel" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	        	<button type="button" id="btn-create" class="btn btn-primary">Create</button>        	
 	      	</div>
 	    </div>
 
