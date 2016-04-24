@@ -101,18 +101,50 @@ $( document ).ready(function(){
 
 	$('.modal .save-modal').click(function(){
 		var $modal = $(this).closest('.modal');
+
+		var $contents = $modal.find('.content-area>div');
+		var errorMsg = inputValidation($contents)
+		if (errorMsg) {
+			alert(errorMsg);
+			return;
+		}
 		$modal.modal('hide');
 		console.log('fake save');
+		// need to validate
+
 	})
 
 	$('#submitEvent').click(function(){
+
+		// note 		
 		var $noteModal = $('#noteModal');
 		var notes = getNotes($noteModal);
-		console.log(notes);
 		// $('.sidebar .overlay').removeClass('hidden');
+		 
+		// text quiz
 		var $textQuizModal = $('#textQuizModal');
 		var textQuiz = getTextQuiz($textQuizModal);
-		console.log(textQuiz);
+
+
+
+		// checkBox quiz
+		var $checkBoxQuizModal = $('#checkBoxQuizModal');
+		var checkBoxQuiz = getCheckBoxQuiz($checkBoxQuizModal);
+
+		// multipleChoice quiz
+		var $multipleChoiceQuizModal = $('#multipleChoiceQuizModal');
+		var multipleChoiceQuiz = getMultipleChoiceQuiz($multipleChoiceQuizModal);
+
+
+		var obj = {};
+		obj.notes = notes;
+		obj.textQuiz = textQuiz;
+		obj.checkBoxQuiz = checkBoxQuiz;
+		obj.multipleChoiceQuiz = multipleChoiceQuiz;
+
+
+		console.log(obj);
+		window.obj = obj;
 	})
 
 });
@@ -120,6 +152,51 @@ $( document ).ready(function(){
 
 
 //functions
+function inputValidation($contents) {
+
+	var hasChoice = $contents.find('.choices').length > 0;
+	var errorMsg ='';
+
+	$.each($contents, function(i) {
+
+		var input = $(this).find('input');
+		if ($contents.length <= 1 && !input.val()) {
+			// didn't fill this
+			return;
+		}
+
+		if (!input.val()) {
+			if (!errorMsg) {
+				errorMsg = 'didn\'t fill in input';
+				return;
+			}
+		}
+
+		var $area = $(this).find('textarea');
+		if ($area.length > 0 && !$area.val()) {
+			if (!errorMsg) {
+				errorMsg = 'didn\'t provider your answer';
+				return;
+			}
+		}
+
+		if (hasChoice) {
+			var $choices = $(this).find('.choices');
+			if ($choices.find('.correct-answer').length == 0) {
+				if (!errorMsg) {
+					errorMsg = 'At least one correct answer for each question';
+					return;
+				}					
+			}
+		}
+
+
+	})
+
+	return errorMsg;
+}
+
+
 
 function addOperation(id) {
 	var $modal = $('#' + id);
@@ -202,6 +279,71 @@ function getTextQuiz($modal) {
 
 	return res;
 }
+
+function getCheckBoxQuiz($modal) {
+	var $checkBoxQuestions = $modal.find('.content-area .check-box-questions');
+	var res = [];
+	$.each($checkBoxQuestions, function(i){
+		var question = $(this).find('input').val();
+
+		var $choices = $(this).find('.choices');
+		var choices = getChoices($choices);
+
+
+
+		if (question) {
+			var q = {};
+			q.question = question;
+			q.choices = choices;
+			res.push(q);
+		}
+			
+	})
+
+	return res;
+}
+
+function getMultipleChoiceQuiz($modal) {
+	var $multipleChoicesQuestions = $modal.find('.content-area .multiple-choices-questions');
+	var res = [];
+	$.each($multipleChoicesQuestions, function(i){
+		var question = $(this).find('input').val();
+
+		var $choices = $(this).find('.choices');
+		var choices = getChoices($choices);
+
+		if (question) {
+			var q = {};
+			q.question = question;
+			q.choices = choices;
+			res.push(q);
+		}
+			
+	})
+
+	return res;
+}
+
+
+function getChoices($choices) {
+
+	var $allChoices = $choices.find('.choice');
+	var res = [];
+	$.each($allChoices, function(i){
+
+		var text = $(this).find('.choice-text').text();
+		var isRight = $(this).find('.check-answer').hasClass('correct-answer');
+		var choice = {
+			text: text,
+			isCorrect: isRight
+		};
+
+		res.push(choice);
+	})
+	return res;
+
+}
+
 
 
 
