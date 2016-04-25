@@ -1,8 +1,7 @@
 $( document ).ready(function(){
 	var prevX = 0;
 	var prevY = 0;
-	var $videoPreview = $("#videoPreview");
-	var video = $videoPreview.get(0);
+	window.video = document.getElementById("videoPreview");
 	var h = $( document ).height();
 	var w = $( document ).width();
 	
@@ -10,7 +9,6 @@ $( document ).ready(function(){
 	$('#videoPreview').mousemove(function( event ) {
 		var coordX = event.pageX;
 		var coordY = event.pageY;
-
 		if(prevY < coordY)
 			video.currentTime = video.currentTime + 0.05; // percent * video.duration;
 		else
@@ -23,9 +21,8 @@ $( document ).ready(function(){
 		var $videoInfo = $('.videoInfo');
 		$videoInfo.find('.info-x .detail-value').text(coordX);
 		$videoInfo.find('.info-y .detail-value').text(coordY);
-
+		
 		var formatTime = Math.round(video.currentTime * 100) / 100;
-
 		$videoInfo.find('.info-time .detail-value').text(formatTime);
 	});
 
@@ -168,7 +165,9 @@ $( document ).ready(function(){
 		var time = $(this).text();
 
 		$.get('/event/'+eventId, function(response){
-			fillInData(response);
+			var data = JSON.parse(response);
+			console.log(data);
+			fillInData(data);
 			popupBox('Review time log ' + time + '...', 1);
 
 			$('#submitEvent').addClass('hidden');
@@ -223,14 +222,14 @@ function fillInData(response) {
 	if (checkBoxQuiz && checkBoxQuiz.length > 0)
 		fillQuiz(checkBoxQuiz, 'checkBoxQuizModal', true);
 
-	var multiChoiceQuiz = response.multiChoiceQuiz;
+	var multiChoiceQuiz = response.multipleChoiceQuiz;
 	if (multiChoiceQuiz && multiChoiceQuiz.length > 0)
 		fillQuiz(multiChoiceQuiz, 'multipleChoiceQuizModal', true);
 }
 
 function fillMeta(meta) {
 
-	var video = document.getElementById("videoPreview");
+	var v = document.getElementById("videoPreview");
 	
 
 	$('.sidebar .overlay').addClass('hidden');
@@ -243,7 +242,7 @@ function fillMeta(meta) {
 	var y = meta.y;
 	var time = meta.time;
 
-	video.currentTime = meta.time;
+	v.currentTime = meta.time;
 	var $sidebarInfo = $('.sidebar-info');
 	$sidebarInfo.find(xPath).text(x); //set the text
 	$sidebarInfo.find(yPath).text(y);
@@ -259,7 +258,7 @@ function fillNotes(notesArray) {
 
 		var $template;
 		if (i == 0)
-			$template = $noteModal.find('.original-version');
+			$template = $noteModal.find('.content-area>div');
 		else
 			$template = addOperation('noteModal');
 
@@ -277,7 +276,7 @@ function fillQuiz(quizArray, id, hasChoice) {
 
 		var $template;
 		if (i == 0)
-			$template = $noteModal.find('.original-version');
+			$template = $modal.find('.content-area>div');
 		else
 			$template = addOperation(id);
 
@@ -286,9 +285,9 @@ function fillQuiz(quizArray, id, hasChoice) {
 		if (hasChoice) {
 			var that = this;
 			var $choices = $template.find('.choices .choice');
-			$.each($choices, function(){
+			$.each($choices, function(i){
 				$(this).find('.choice-text').text(that.text);
-				if (that.isCorrect)
+				if (that.choices[i].isCorrect)
 					$(this).find('.check-answer').addClass('correct-answer');
 			})
 

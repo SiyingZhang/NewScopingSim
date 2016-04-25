@@ -1,6 +1,7 @@
 package edu.scopingsim.bean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.scopingsim.dao.QuizDao;
 
@@ -14,6 +15,7 @@ public class Quiz {
 	
 	public Quiz() {
 		// TODO Auto-generated constructor stub
+		choices = new ArrayList<>();
 	}
 	
 	public int getQuizId() {
@@ -50,6 +52,14 @@ public class Quiz {
 
 	public void setQuizType(int quizType) {
 		this.quizType = quizType;
+	}
+	
+	public void setChoices(ArrayList<Choice> c) {
+		this.choices = c;
+	}
+	
+	public ArrayList<Choice> getChoices() {
+		return choices;
 	}
 	
 	/**

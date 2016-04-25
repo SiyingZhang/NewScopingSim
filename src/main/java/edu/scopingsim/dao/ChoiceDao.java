@@ -57,6 +57,7 @@ public class ChoiceDao {
 		}
 	}
 	
+	/*
 	public HashMap<Quiz, ArrayList<Choice>> selectQuizChoices(int eventid) {
 		HashMap<Quiz, ArrayList<Choice>> quizChoiceMap = new HashMap<>();
 		Quiz quiz = new Quiz();
@@ -71,6 +72,31 @@ public class ChoiceDao {
 			e4.printStackTrace();
 		}
 		return quizChoiceMap;
+	}*/
+	
+	public ArrayList<Choice> selectChoicesbyQuizId(int quizid) {
+		ArrayList<Choice> choiceList = new ArrayList<>();
+		
+		try {
+			query = "SELECT * FROM scopingsim.choice WHERE quizId=" + quizid;
+			Statement st = connection.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			
+			while (rs.next()) {
+				Choice choice = new Choice();
+				choice.setChoiceId(rs.getInt(1));
+				choice.setQuizId(quizid);
+				choice.setChoiceText(rs.getString(3));
+				choice.setTrue(rs.getInt(4));
+				
+				choiceList.add(choice);
+			}
+			
+		} catch (SQLException e4) {
+			// TODO: handle exception
+			e4.printStackTrace();
+		}
+		return choiceList;
 	}
 
 }

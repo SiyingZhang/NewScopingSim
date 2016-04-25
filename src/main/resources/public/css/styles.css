@@ -185,7 +185,7 @@ body a {
     border-color: #02b3e4 !important;
 }
 
-#submitEvent{
+#submitEvent, #finishReview{
 	position: absolute;
     bottom: 0;
     border-radius: 0px;
