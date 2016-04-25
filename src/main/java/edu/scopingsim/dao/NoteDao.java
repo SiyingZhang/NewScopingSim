@@ -9,9 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import edu.scopingsim.bean.Event;
 import edu.scopingsim.bean.Note;
+import edu.scopingsim.bean.Quiz;
 import edu.scopingsim.utils.DatabaseConnector;
 
 public class NoteDao {
@@ -55,5 +57,28 @@ public class NoteDao {
 			e3.printStackTrace();
 			return -1;
 		}
+	}
+	
+	public ArrayList<Note> selectQuizByEventId(int eventid) {
+		ArrayList<Note> noteList = new ArrayList<>();
+		
+		try {
+			query = "SELECT * FROM scopingsim.note WHERE eventId=" + eventid;
+			Statement st = connection.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()) {
+				//Store as a quiz
+				Note note = new Note();
+				note.setNoteId(rs.getInt(1));
+				note.setEventId(rs.getInt(2));
+				note.setNoteText(rs.getString(3));
+				noteList.add(note);
+			}
+
+		} catch (SQLException e4) {
+			e4.printStackTrace();
+		}
+		return noteList;
 	}
 }

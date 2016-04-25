@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.scopingsim.bean.*;
+import edu.scopingsim.dao.EventDao;
+import edu.scopingsim.dao.NoteDao;
 import edu.scopingsim.dao.QuizDao;
 import freemarker.core.ReturnInstruction.Return;
 
@@ -23,6 +25,8 @@ public class EventService {
 	
 	private int videoId = 1;
 	private QuizDao qd = new QuizDao();
+	private NoteDao nd = new NoteDao();
+	private EventDao ed = new EventDao();
 	
 	public EventService() {
 		super();
@@ -77,7 +81,11 @@ public class EventService {
 		    String id = request.params(":id");
 		    int eventid = Integer.parseInt(id);
 		    
-		    ArrayList<Quiz> quizs= qd.selectQuizByEventId(eventid);
+		    Event event = ed.selectByEventId(eventid);
+		    ArrayList<Quiz> quizs = qd.selectQuizByEventId(eventid);
+		    ArrayList<Note> notes =	nd.selectQuizByEventId(eventid);
+		    
+		    
 		    
 		    return null;
 		});

@@ -12,6 +12,7 @@ import java.sql.Statement;
 
 import edu.scopingsim.bean.Case;
 import edu.scopingsim.bean.Event;
+import edu.scopingsim.bean.Note;
 import edu.scopingsim.bean.Video;
 import edu.scopingsim.utils.DatabaseConnector;
 
@@ -58,6 +59,28 @@ public class EventDao {
 			e3.printStackTrace();
 			return -1;
 		}
+	}
+	
+	public Event selectByEventId(int eventid) {
+		Event event = new Event();
+		
+		try {
+			query = "SELECT * FROM scopingsim.event WHERE id=" + eventid;
+			Statement st = connection.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			
+			if(rs.next()) {
+				event.setEventId(rs.getInt(1));
+				event.setVideoId(1);
+				event.setTimeIndex(rs.getString(3));
+				event.setX(rs.getInt(4));
+				event.setY(rs.getInt(5));
+			}
+
+		} catch (SQLException e4) {
+			e4.printStackTrace();
+		}
+		return event;
 	}
 	
 

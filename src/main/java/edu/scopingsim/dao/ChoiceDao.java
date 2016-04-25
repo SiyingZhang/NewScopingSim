@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import edu.scopingsim.bean.Choice;
 import edu.scopingsim.bean.Event;
@@ -53,6 +55,22 @@ public class ChoiceDao {
 			e3.printStackTrace();
 			return -1;
 		}
+	}
+	
+	public HashMap<Quiz, ArrayList<Choice>> selectQuizChoices(int eventid) {
+		HashMap<Quiz, ArrayList<Choice>> quizChoiceMap = new HashMap<>();
+		Quiz quiz = new Quiz();
+		Choice choice = new Choice();
+		ArrayList<Choice> choices = new ArrayList<>();
+		
+		try {
+			
+			
+		} catch (SQLException e4) {
+			// TODO: handle exception
+			e4.printStackTrace();
+		}
+		return quizChoiceMap;
 	}
 
 }
