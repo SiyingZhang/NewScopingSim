@@ -58,7 +58,7 @@ public class QuizDao {
 			Statement st = connection.createStatement();
 			ResultSet rs = st.executeQuery(query);
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				//Store as a quiz
 				Quiz quiz = new Quiz();
 				quiz.setQuizId(rs.getInt(1));
@@ -66,6 +66,7 @@ public class QuizDao {
 				quiz.setQuizText(rs.getString(3));
 				quizList.add(quiz);
 			}
+
 		} catch (SQLException e4) {
 			e4.printStackTrace();
 		}

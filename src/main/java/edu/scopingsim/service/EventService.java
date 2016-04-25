@@ -2,13 +2,12 @@ package edu.scopingsim.service;
 
 import static spark.Spark.*;
 
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import edu.scopingsim.bean.*;
-
+import edu.scopingsim.dao.QuizDao;
 import freemarker.core.ReturnInstruction.Return;
 
 import com.google.gson.Gson;
@@ -23,6 +22,7 @@ public class EventService {
 	private Gson gson = new Gson();
 	
 	private int videoId = 1;
+	private QuizDao qd = new QuizDao();
 	
 	public EventService() {
 		super();
@@ -75,6 +75,9 @@ public class EventService {
 		
 		get("/event/:id", (request, response) -> {
 		    String id = request.params(":id");
+		    int eventid = Integer.parseInt(id);
+		    
+		    ArrayList<Quiz> quizs= qd.selectQuizByEventId(eventid);
 		    
 		    return null;
 		});
