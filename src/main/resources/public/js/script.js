@@ -50,8 +50,6 @@ $( document ).ready(function(){
 	})
 
 
-
-
 	// add new note/quiz button, click and id increase by one
 	$('.modal').on('click', '.add-btn', function(){
 		var id = $(this).closest('.modal').attr('id');
@@ -71,27 +69,14 @@ $( document ).ready(function(){
 		var $choices = $(this).closest('.choices');
 		var id = $modal.attr('id');
 		var isMultiple = id.indexOf('multiple') > -1;
-		checkAnswerOperation($choices, $(this), isMultiple);
+		checkAnswerOperation($choices, $(this), !isMultiple);
 	})
-
-	//close the modal and initialze the modal
-	// $('.modal').on('hidden.bs.modal', function(){
-	// 	console.log('close');
-	// 	initModal($(this));
-	// })
 
 	//click on "save changes" on each modal for note
 	$('.modal #saveNote').click(function(){
 		console.log('click');
 		// saveNote();
 	})
-
-	// on('click', '.save', function(){
-	// 	var isEdit = $(this).hasClass('edit');
-	// 	var $choice = $(this).closest('.choice');
-	// 	editOperation($choice, isEdit);
-	// })
-
 
 
 	$('.modal .reset').click(function(){
@@ -168,7 +153,7 @@ $( document ).ready(function(){
 				initModal($multipleChoiceQuizModal);
 				
 				// notification
-				popupBox("Event submitted successfully", 2);
+				popupBox("Event submitted successfully", 1);
 				
 				// add overlay
 				$('.sidebar .overlay').removeClass('hidden');
@@ -180,11 +165,39 @@ $( document ).ready(function(){
 	$('#timeIndex').on('click', '.time-log', function(e){
 		e.preventDefault();
 		var eventId = $(this).attr('data-event-id');
-		
+		var time = $(this).text();
+
 		$.get('/event/'+eventId, function(response){
 			fillInData(response);
+			popupBox('Review time log ' + time + '...', 1);
+
+			$('#submitEvent').addClass('hidden');
+			$('#finishReview').removeClass('hidden');
 		})
 		
+	})
+
+	$('.sidebar').on('click', '#finishReview', function(e){
+		e.preventDefault();
+
+		popupBox("Finish review...", 1);
+		
+		var $noteModal = $('#noteModal');
+		var $textQuizModal = $('#textQuizModal');
+		var $checkBoxQuizModal = $('#checkBoxQuizModal');
+		var $multipleChoiceQuizModal = $('#multipleChoiceQuizModal');
+		// initModal
+		initModal($noteModal);
+		initModal($textQuizModal);
+		initModal($checkBoxQuizModal);
+		initModal($multipleChoiceQuizModal);
+
+		// add overlay
+		$('.sidebar .overlay').removeClass('hidden');
+
+		$('#submitEvent').removeClass('hidden');
+		$('#finishReview').addClass('hidden');
+
 	})
 
 });
@@ -194,6 +207,96 @@ $( document ).ready(function(){
 //functions
 function fillInData(response) {
 	
+
+	var meta = response.meta;
+	fillMeta(meta);
+
+	var notes = response.notes;
+	if (notes && notes.length > 0)
+		fillNotes(notes);
+
+	var textQuiz = response.textQuiz;
+	if (textQuiz && textQuiz.length > 0)
+		fillQuiz(textQuiz, 'textQuizModal', false);
+
+	var checkBoxQuiz = response.checkBoxQuiz;
+	if (checkBoxQuiz && checkBoxQuiz.length > 0)
+		fillQuiz(checkBoxQuiz, 'checkBoxQuizModal', true);
+
+	var multiChoiceQuiz = response.multiChoiceQuiz;
+	if (multiChoiceQuiz && multiChoiceQuiz.length > 0)
+		fillQuiz(multiChoiceQuiz, 'multipleChoiceQuizModal', true);
+}
+
+function fillMeta(meta) {
+
+	var video = document.getElementById("videoPreview");
+	
+
+	$('.sidebar .overlay').addClass('hidden');
+
+	var $videoInfo = $('.videoInfo');
+	var xPath = '.info-x .detail-value';
+	var yPath = '.info-y .detail-value';
+	var timePath = '.info-time .detail-value';
+	var x = meta.x;
+	var y = meta.y;
+	var time = meta.time;
+
+	video.currentTime = meta.time;
+	var $sidebarInfo = $('.sidebar-info');
+	$sidebarInfo.find(xPath).text(x); //set the text
+	$sidebarInfo.find(yPath).text(y);
+	$sidebarInfo.find(timePath).text(time);
+
+}
+
+function fillNotes(notesArray) {
+
+	var $noteModal = $('#noteModal');
+
+	$.each(notesArray, function(i) {
+
+		var $template;
+		if (i == 0)
+			$template = $noteModal.find('.original-version');
+		else
+			$template = addOperation('noteModal');
+
+		$template.find('input').val(this.text);
+	})
+
+
+}
+
+function fillQuiz(quizArray, id, hasChoice) {
+
+	var $modal = $('#' + id);
+
+	$.each(quizArray, function(i) {
+
+		var $template;
+		if (i == 0)
+			$template = $noteModal.find('.original-version');
+		else
+			$template = addOperation(id);
+
+		$template.find('input').val(this.question);
+
+		if (hasChoice) {
+			var that = this;
+			var $choices = $template.find('.choices .choice');
+			$.each($choices, function(){
+				$(this).find('.choice-text').text(that.text);
+				if (that.isCorrect)
+					$(this).find('.check-answer').addClass('correct-answer');
+			})
+
+		} else {
+			$template.find('textarea').val(this.answer);
+		}
+	})
+
 }
 
 
@@ -295,6 +398,7 @@ function addOperation(id) {
 
 	$target.append('<hr>').append($template);
 	$template.hide().slideDown();
+	return $template;
 }
 
 function editOperation($choice, isEdit) { //isEdit??
