@@ -141,6 +141,11 @@ $( document ).ready(function(){
 		obj.multipleChoiceQuiz = multipleChoiceQuiz;
 		obj.meta = meta;
 
+		if (!notes.length && !textQuiz.length && !checkBoxQuiz.length && !multipleChoiceQuiz.length) {
+			alert('You cannot submit this event without making any changes');
+			return;
+		}
+
 
 		console.log(obj);
 		window.obj = obj;
@@ -154,9 +159,32 @@ $( document ).ready(function(){
 			data: JSON.stringify(obj),
 			success: function (res) {
 				console.log(res); 
+				addTimeLog(res);
+
+				// initModal
+				initModal($noteModal);
+				initModal($textQuizModal);
+				initModal($checkBoxQuizModal);
+				initModal($multipleChoiceQuizModal);
+				
+				// notification
+				popupBox("Event submitted successfully", 2);
+				
+				// add overlay
+				$('.sidebar .overlay').removeClass('hidden');
 			}
 		})
 
+	})
+	
+	$('#timeIndex').on('click', '.time-log', function(e){
+		e.preventDefault();
+		var eventId = $(this).attr('data-event-id');
+		
+		$.get('/event/'+eventId, function(response){
+			fillInData(response);
+		})
+		
 	})
 
 });
@@ -164,11 +192,46 @@ $( document ).ready(function(){
 
 
 //functions
+function fillInData(response) {
+	
+}
+
+
+
+function popupBox(text, second) {
+	
+	second = second*1000 || 1000;
+	
+	var $box = $('#popup-box');
+	var $ele = $box.find('h4');
+	$ele.empty(); // init
+	$ele.text(text);
+	$box.addClass('box-showup');
+	setTimeout(function(){
+		$box.removeClass('box-showup');
+	}, second);
+	
+}
+
+
+function addTimeLog(res) {
+
+	var $timeContainer = $('#timeIndex');
+	$timeContainer.find('.no-time-log').addClass('hidden');
+	var $timeLog = $('<li>');
+	var $link = $('<a href>');
+	$link.attr('data-event-id', res.eventId);
+	$link.text(res.timestamp)
+	$link.addClass('time-log');
+	$timeLog.append($link);
+	$timeContainer.append($timeLog);
+}
+
 function getMeta() {
 	var $sidebar = $('.sidebar');
-	var x = $sidebar.find('.sidebar-info .info-x .detail-value');
-	var y = $sidebar.find('.sidebar-info .info-y .detail-value');
-	var time = $sidebar.find('.sidebar-info .info-time .detail-value');
+	var x = $sidebar.find('.sidebar-info .info-x .detail-value').text();
+	var y = $sidebar.find('.sidebar-info .info-y .detail-value').text();
+	var time = $sidebar.find('.sidebar-info .info-time .detail-value').text();
 	var obj = {
 		x: x,
 		y: y,

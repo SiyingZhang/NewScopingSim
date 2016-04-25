@@ -2,7 +2,22 @@ body a {
 	color: #02b3e4;
 }
 
+#popup-box {
+	width: 400px;
+	position: absolute;
+	display: none;
+	top: 200px;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+	padding: 20px;
+	z-index: 9999;
+}
 
+#popup-box.box-showup {
+	display: block;
+	font-weight: 200;
+}
 
 .navbar {
 	margin-bottom:0px;
@@ -65,7 +80,7 @@ body a {
 	height: 100%;
 	width: 100%;
 	background-color: rgba(108, 115, 117, .8);
-	z-index: 9999;
+	z-index: 8888;
 	opacity: ;
 	/*filter: blur(10px); */
 }

@@ -35,7 +35,7 @@ public class NoteDao {
 		query = "INSERT INTO scopingsim.note(eventId, noteText) values (?, ?)"; 
 		//" + e.getVideoId() + "','" + e.getTimeIndex() + "','" + e.getX() + "' )";
 		try {
-			query = "INSERT INTO scopingsim.event(eventId, noteText) values (?, ?)"; 
+			query = "INSERT INTO scopingsim.note(eventId, noteText) values (?, ?)"; 
 			PreparedStatement ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, eventId);
 			ps.setString(2, noteText);

@@ -3,23 +3,18 @@ package edu.scopingsim.service;
 import static spark.Spark.*;
 
 import java.util.HashMap;
-import java.util.Random;
-import java.util.UUID;
-
 import spark.Session;
 
 import com.google.gson.Gson;
 
 import edu.scopingsim.bean.Case;
 import edu.scopingsim.bean.Video;
-import edu.scopingsim.dao.CaseDao;
-import edu.scopingsim.dao.VideoDao;
 
 
 public class VideoService {
 	private Gson gson = new Gson();
 	private Video v = new Video();
-	int id;
+	int id = -1;
 	
 	/**
 	 * Video service 
@@ -51,11 +46,12 @@ public class VideoService {
 				//Add video into database
 				int temp = v.addVideo(case1.getCaseId(), videoName, videoPath);
 				if(temp != -1) {
-					id = temp;
+					id = temp; 	//video Id
+					session.attribute("video", v);  //Add video into session
+					
 					attributes.put("notExist", true);
 					attributes.put("status", "Video uploaded successfully, redirecting now...");
 				} else{
-					id = -1;
 					attributes.put("notExist", false);
 					attributes.put("status", "Video has been uploaded before");
 				}				
@@ -70,9 +66,7 @@ public class VideoService {
 		/*
 		get("/scopingsim/:caseName", (request, response) -> {
 			
-		}); */
-		
-		
+		}); */	
 	}
 
 }
